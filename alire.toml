@@ -1,0 +1,10 @@
+name = "diskflags"
+description = "Manage small files to flag conditions"
+version = "0.1.0-dev"
+
+authors = ["Alejandro R. Mosteo"]
+maintainers = ["Alejandro R. Mosteo <alejandro@mosteo.com>"]
+maintainers-logins = ["mosteo"]
+licenses = "GPL-3.0-or-later WITH GPL-3.0-with-GCC-exception"
+website = ""
+tags = ["flag", "disk", "file"]
