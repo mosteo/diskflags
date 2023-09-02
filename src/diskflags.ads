@@ -19,6 +19,13 @@ package Diskflags is
    --  Set/remove the canary flag of the operation on path being complete. This
    --  should be called when the operation has actually been completed.
 
+   procedure Mark_Done (This : Flag)
+     with Post => This.Exists;
+   --  Alternative that can be used within a expression
+
+   procedure Mark_Undone (This : Flag)
+     with Post => This.Exists;
+
    function Path (This : Flag) return Some_Path;
 
 private

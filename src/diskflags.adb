@@ -85,4 +85,24 @@ package body Diskflags is
       end if;
    end Mark;
 
+   ---------------
+   -- Mark_Done --
+   ---------------
+
+   procedure Mark_Done (This : Flag) is
+      RW : Flag := This;
+   begin
+      RW.Mark (Done => True);
+   end Mark_Done;
+
+   -----------------
+   -- Mark_Undone --
+   -----------------
+
+   procedure Mark_Undone (This : Flag) is
+      RW : Flag := This;
+   begin
+      RW.Mark (Done => False);
+   end Mark_Undone;
+
 end Diskflags;
