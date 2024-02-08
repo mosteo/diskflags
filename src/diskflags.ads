@@ -24,7 +24,7 @@ package Diskflags is
    --  Alternative that can be used within a expression
 
    procedure Mark_Undone (This : Flag)
-     with Post => This.Exists;
+     with Post => not This.Exists;
 
    function Path (This : Flag) return Some_Path;
 
