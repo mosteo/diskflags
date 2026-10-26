@@ -26,6 +26,15 @@ package Diskflags is
    procedure Mark_Undone (This : Flag)
      with Post => not This.Exists;
 
+   procedure Mark_Done (This : Flag; Data : String)
+     with Post => This.Exists and then This.Data = Data;
+   --  Set the flag, storing Data in it byte for byte (replacing the contents
+   --  of an already set flag), for whoever checks it later
+
+   function Data (This : Flag) return String
+     with Pre => This.Exists;
+   --  What the flag was set with, or "" for a flag set without data
+
    function Path (This : Flag) return Some_Path;
 
 private

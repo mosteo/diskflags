@@ -1,0 +1,42 @@
+name: Tests
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    name: ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      fail-fast: false
+      matrix:
+        os:
+          - ubuntu-latest
+          - windows-latest
+          - macos-15-intel
+          # Not macos-latest (macos-26): since runner image 20261013, its
+          # SDK's libSystem.tbd lists arm64e.x1, which the GNAT linker rejects
+          - macos-15
+
+    steps:
+      - name: Check out diskflags
+        uses: actions/checkout@v7
+
+      # The built-in test runner (`[[test]]` in alire.toml) is in alr 3.0
+      - name: Set up Alire
+        uses: alire-project/setup-alire@v6
+        with:
+          version: nightly
+
+      - name: Build in validation mode
+        run: alr -n build --validation
+
+      - name: Test
+        run: alr -n test
