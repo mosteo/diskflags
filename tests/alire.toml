@@ -1,0 +1,13 @@
+name = "diskflags_tests"
+description = "Tests for diskflags"
+version = "0.0.0-test"
+
+[[depends-on]]
+diskflags = "*"
+
+[[pins]]
+diskflags = { path = ".." }
+
+[build-profiles]
+diskflags       = "validation"
+diskflags_tests = "validation"

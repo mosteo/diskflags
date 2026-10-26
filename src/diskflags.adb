@@ -1,4 +1,5 @@
 with Ada.Directories;
+with Ada.Streams.Stream_IO;
 
 with GNAT.OS_Lib;
 
@@ -104,5 +105,49 @@ package body Diskflags is
    begin
       RW.Mark (Done => False);
    end Mark_Undone;
+
+   ---------------
+   -- Mark_Done --
+   ---------------
+
+   procedure Mark_Done (This : Flag; Data : String) is
+      use Ada.Streams.Stream_IO;
+      File : File_Type;
+   begin
+      Create_Tree (Dirs.Containing_Directory (String (This.Path)));
+      Create (File, Out_File, String (This.Path));
+      String'Write (Stream (File), Data);
+      Close (File);
+   exception
+      when others =>
+         if Is_Open (File) then
+            Close (File);
+         end if;
+         raise;
+   end Mark_Done;
+
+   ----------
+   -- Data --
+   ----------
+
+   function Data (This : Flag) return String is
+      use Ada.Streams.Stream_IO;
+      File : File_Type;
+   begin
+      Open (File, In_File, String (This.Path));
+      declare
+         Result : String (1 .. Natural (Size (File)));
+      begin
+         String'Read (Stream (File), Result);
+         Close (File);
+         return Result;
+      end;
+   exception
+      when others =>
+         if Is_Open (File) then
+            Close (File);
+         end if;
+         raise;
+   end Data;
 
 end Diskflags;
